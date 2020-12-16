@@ -1,6 +1,11 @@
 import React from "react";
 import "./styles.css";
 
+import Loader from "./components/Loader";
+import Header from "./components/Header";
+import Intro from "./components/Intro";
+import TextBlock from "./components/TextBlock";
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -13,7 +18,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch("https://my-json-server.typicode.com/vantu98/fake-api/cv")
+    fetch("https://my-json-server.typicode.com/vantu98/fake-api/cv_en")
       .then((res) => res.json())
       .then(
         (result) => {
@@ -37,29 +42,28 @@ class App extends React.Component {
       return <p>Load data errors</p>;
     } else {
       return (
-        <div className="grid grid-cols-3 h-screen">
-          <div className="w-full h-full bg-gray-100"></div>
-          <div className="col-span-2 w-full h-full bg-gray-200"></div>
+        <div>
+          <Header data={data.about_me} />
+          <section className="pt-20">
+            <div className="container mx-auto">
+              <Intro data={data.about_me} />
+
+              <div className="grid grid-rows-2 lg:grid lg:grid-cols-2 xl:grid xl:grid-cols-2 gap-4 my-8">
+                <div className="w-full px-2">
+                  <div className="w-full">
+                    <TextBlock
+                      title="personal summary"
+                      content={data.about_me.description}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       );
     }
   }
-}
-
-function Loader() {
-  return (
-    <div className="relative h-screen w-full">
-      <div className="absolute w-full h-screen">
-        <div className="relative">
-          <div className="w-full h-screen bg-black opacity-25"></div>
-
-          <div className="loader-center p-2">
-            <div className="loader"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
 }
 
 export default App;
